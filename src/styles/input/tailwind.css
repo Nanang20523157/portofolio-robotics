@@ -1,0 +1,248 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* HEADER */
+@layer components {
+    header {
+        @apply bg-white fixed z-50 top-0 left-0 right-0 max-w-screen-2xl mx-auto pl-8 pr-10 py-4 flex duration-300;
+    }
+}
+
+/* CLOCK */
+@layer components {
+    .div-clock {
+        @apply w-16 h-16 border-2 rounded-full flex flex-col place-content-center;
+    }
+
+    .time-clock {
+        @apply text-2xl font-bold text-center mx-auto font-mono -mt-[2px];
+    }
+
+    .ket-clock {
+        @apply text-xs text-center mx-auto -mt-1;
+    }
+}
+
+/* MAIN */
+@layer components {
+    main {
+        @apply bg-white min-h-screen max-w-screen-xl mx-auto mt-24 z-40;
+    }
+}
+
+/* BANNER-IMG & SEARCH*/
+@layer components {
+    .banner {
+        @apply relative p-8 m-8 mt-[105px] rounded-xl flex justify-center text-white bg-cover bg-center h-[400px] bg-[url('../../public/assets/robotics.jpg')] bg-blue-300 bg-blend-multiply;
+    }
+}
+
+/* SEARCH-FORM */
+@layer components {
+    .div-search {
+        @apply absolute shadow-md bottom-0 translate-y-1/2 rounded-md bg-white border border-slate-300 p-4;
+    }
+
+    .input-search {
+        @apply px-3 py-2 border rounded-md w-full block text-sm placeholder:text-slate-400 focus:outline-none focus:ring-1;
+    }
+
+    .btn-search {
+        @apply px-4 py-2 bg-biru-uii rounded-lg text-white font-semibold my-auto;
+    }
+
+    .valid-input {
+        @apply focus:ring-biru-uii focus:border-biru-uii;
+    }
+
+    .invalid-input {
+        @apply text-red-700 focus:ring-red-700 border-red-600;
+    }
+}
+
+/* MAIN_CONTENT */
+@layer components {
+    .div-luar {
+        @apply mt-24 mx-8 mb-16 flex flex-col items-center;
+    }
+
+    .h2-content {
+        @apply text-biru-uii text-4xl font-bold text-center mb-2;
+    }
+
+    .ket-h2-content {
+        @apply text-center text-biru-uii text-lg;
+    }
+
+    .sub-judul-1 {
+        @apply text-xl font-bold text-biru-uii;
+    }
+
+    .angka-satu {
+        @apply ml-2 inline-block bg-biru-uii rounded-sm m-auto text-white text-base font-bold px-[6px];
+    }
+}
+
+/* INFORMATION-TEST */
+@layer components {
+    .div-info {
+        @apply w-full bg-slate-50 shadow-lg border border-slate-300 p-5 rounded-md flex-col items-center relative inline-flex;
+    }
+
+    .div-info-main {
+        @apply flex font-semibold items-center p-2 px-3 rounded-md border;
+    }
+
+    .div-info-ket {
+        @apply flex items-center border px-2 py-1 rounded-md;
+    }
+
+    /* span-normal & failed-span */
+    .span-lolos {
+        @apply font-bold text-base ml-1;
+    }
+
+    .detail {
+        @apply text-sm font-semibold -ml-1;
+    }
+}
+
+/* SUCCESS-LINE */
+/* FAILED-LINE */
+/* NORMAL-LINE */
+@layer components {
+    .line-result {
+        @apply w-full h-1 mt-2 mx-1 rounded-full;
+    }
+
+    .sub-div-detail {
+        @apply h-fit -mt-[2px] mr-auto flex-none;
+    }
+}
+
+/* DIVISION */
+@layer components {
+    .mid-div-division {
+        @apply w-full h-fit pb-4 border-biru-uii border-b;
+    }
+
+    .span-division {
+        @apply text-xl font-bold text-biru-uii;
+    }
+
+    .span-angka-dua {
+        @apply ml-2 inline-block bg-biru-uii rounded-sm m-auto text-white text-base font-bold px-[6px];
+    }
+
+    /* CARD */
+    .div-luar-card {
+        @apply w-full overflow-x-scroll overflow-y-hidden;
+    }
+
+    .div-mid-card {
+        @apply w-screen grid gap-6 grid-flow-col auto-cols-auto;
+    }
+
+    .card {
+        @apply bg-slate-50 h-[370px] w-[270px] flex flex-col shadow-lg border border-slate-300 p-5 rounded-md;
+    }
+
+    .division-name {
+        @apply decoration-yellow-300 underline underline-offset-2 decoration-4 font-semibold text-2xl;
+    }
+
+    .div-bungkus-img {
+        @apply aspect-[3/2] rounded-lg overflow-hidden hover:scale-95 transition-all duration-500 mb-2;
+    }
+
+    .card-content-img {
+        @apply w-full h-[230px] bg-[url('https://cdn.elearningindustry.com/wp-content/uploads/2020/06/Is-educational-robotics-the-future-1024x574.jpg')] bg-cover bg-center group-hover:scale-125 group-hover:rotate-12 transition-all duration-500;
+    }
+}
+
+/* SCROLL-SMOOTH */
+@layer components {
+    .scroll-up {
+        @apply w-11 h-11 fixed bottom-5 right-5 border rounded-full flex justify-center bg-sky-200 shadow-md z-10;
+    }
+
+    .a-top {
+        @apply text-xl my-auto text-white;
+    }
+}
+
+
+/* OVERLAY */
+@layer components {
+    .blur-layer {
+        /* opacity */
+        @apply fixed top-0 h-screen w-full z-30 bg-slate-400 opacity-50 cursor-pointer;
+    }
+
+    .close-btn {
+        /* top */
+        @apply fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-full -mt-3 text-xl z-50 text-white font-semibold cursor-pointer;
+    }
+
+    .display-iden {
+        /* translate */
+        @apply fixed top-1/4 overflow-y-auto h-full max-h-[75%] z-40 bg-slate-50 w-full shadow-lg border border-slate-300 p-5 rounded-t-2xl;
+    }
+
+    .mid-layer {
+        @apply w-full h-fit pb-4 flex flex-col place-content-center mt-3;
+    }
+
+    .overlay-no1 {
+        @apply ml-2 inline-block bg-biru-uii rounded-sm m-auto text-white text-lg font-bold px-[6px];
+    } 
+
+    .over-name {
+        @apply decoration-yellow-300 underline underline-offset-2 decoration-4 font-semibold text-lg text-center -ml-1 mb-2 md:mb-5;
+    }
+
+    /* >>>>>>>>>>>>>><<<<<<<<<<<< */
+    /* HASIL HP*/
+    .over-result {
+        @apply mb-5;
+    }
+
+    .keterangan {
+        @apply font-bold text-base  ml-1 -mt-[1px];
+    }
+
+    /* HASIL PC*/
+    .kotak-result {
+        @apply flex w-fit items-center border px-2 py-1 rounded-md place-content-center mx-auto;
+    }
+
+    /* >>>>>>>>>>>>>><<<<<<<<<<<< */
+
+    .congrat {
+        @apply w-full md:max-w-2xl h-[220px] sm:h-[240px] md:h-[290px] bg-slate-500 rounded-md mb-3 bg-[url('../../public/assets/Congrat.jpg')] bg-contain bg-center shadow-xl border border-slate-300;
+    }
+
+    .never-giveUp {
+        @apply w-full md:max-w-2xl h-[220px] sm:h-[240px] md:h-[290px] bg-slate-500 rounded-md mb-3 bg-[url('../../public/assets/Never-Give-up2.jpg')] bg-cover bg-left-top shadow-xl border border-slate-300;
+    }
+
+    .over-table {
+        @apply w-full md:max-w-2xl border-2 px-7 pt-3 pb-2 rounded-2xl border-slate-500 mx-auto hidden md:block;
+    }
+}
+
+/* TABLE HP */
+@layer components {
+    .div-table-out {
+        @apply flex flex-col w-full mt-3 md:hidden;
+    }
+
+    .div-table-mid {
+        @apply flex flex-col w-full gap-y-2 mt-2;
+    }
+
+    .div-table-inner {
+        @apply flex font-normal items-center justify-between gap-x-1 p-2 px-2 rounded-md border border-slate-400;
+    }
+}

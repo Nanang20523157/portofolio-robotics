@@ -1,0 +1,19 @@
+{
+  "name": "project1",
+  "version": "1.0.0",
+  "description": "Node.js Restful CRUD API with Node.js, Express and MySQL",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "npx tailwindcss -i ./src/styles/input/tailwind.css -o ./src/styles/style.css --watch"
+  },
+  "keywords": [],
+  "author": "nakun",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.1.8"
+  },
+  "dependencies": {
+    "he": "^1.2.0"
+  }
+}
