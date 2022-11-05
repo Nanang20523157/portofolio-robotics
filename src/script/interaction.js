@@ -4,7 +4,7 @@ const body = document.querySelector('body');
 const search = document.querySelector('form.search');
 const board = document.querySelector('div.board');
 let childDisplay = [];
-let tampilkan = true;
+let tampilkan = false;
 
 function pendataaan(parent) {
     let jumlahAnak = parent.childElementCount;
