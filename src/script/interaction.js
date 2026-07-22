@@ -3,6 +3,9 @@ const navbar = document.querySelector('header.header');
 const body = document.querySelector('body');
 const search = document.querySelector('form.search');
 const board = document.querySelector('div.board');
+const nimInputField = document.querySelector('input#nim');
+const nimSuggestionDialog = document.querySelector('dialog#nim-suggestion-dialog');
+const nimSuggestionClose = document.querySelector('button#nim-suggestion-close');
 let childDisplay = [];
 let tampilkan = false;
 
@@ -31,40 +34,38 @@ const t2Hour = document.querySelector("div.timer2 div.div-clock span.hour");
 const t2Mint = document.querySelector("div.timer2 div.div-clock span.mint");
 const t2Sec = document.querySelector("div.timer2 div.div-clock span.sec");
 
-let deadline = new Date("NOV 05, 2022 16:00:00").getTime();
-  
-let x = setInterval(function() {
-  
-let now = new Date().getTime();
-let t = deadline - now;
-let days = Math.floor(t / (1000 * 60 * 60 * 24));
-let hours = Math.floor((t % (1000 * 60 * 60 * 24))/(1000 * 60 * 60));
-let minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
-let seconds = Math.floor((t % (1000 * 60)) / 1000);
-if (days < 10) days = "0" + days;
-if (hours < 10) hours = "0" + hours;
-if (minutes < 10) minutes = "0" + minutes;
-if (seconds < 10) seconds = "0" + seconds;
-t1Day.innerHTML = days ;
-t1Hour.innerHTML = hours;
-t1Mint.innerHTML = minutes; 
-t1Sec.innerHTML = seconds; 
-t2Day.innerHTML = days ;
-t2Hour.innerHTML = hours;
-t2Mint.innerHTML = minutes; 
-t2Sec.innerHTML = seconds; 
-if (t < 0) {
-        clearInterval(x);
+let countdownSeconds = 60;
+
+function updateTimer(totalSeconds) {
+    let days = Math.floor(totalSeconds / (60 * 60 * 24));
+    let hours = Math.floor((totalSeconds % (60 * 60 * 24)) / (60 * 60));
+    let minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
+    let seconds = Math.floor(totalSeconds % 60);
+
+    if (days < 10) days = "0" + days;
+    if (hours < 10) hours = "0" + hours;
+    if (minutes < 10) minutes = "0" + minutes;
+    if (seconds < 10) seconds = "0" + seconds;
+
+    t1Day.innerHTML = days;
+    t1Hour.innerHTML = hours;
+    t1Mint.innerHTML = minutes;
+    t1Sec.innerHTML = seconds;
+    t2Day.innerHTML = days;
+    t2Hour.innerHTML = hours;
+    t2Mint.innerHTML = minutes;
+    t2Sec.innerHTML = seconds;
+}
+
+updateTimer(countdownSeconds);
+
+setInterval(function() {
+    countdownSeconds -= 1;
+    if (countdownSeconds < 0) {
         tampilkan = true;
-        t1Day.innerHTML = '00';
-        t1Hour.innerHTML = '00';
-        t1Mint.innerHTML = '00'; 
-        t1Sec.innerHTML = '00'; 
-        t2Day.innerHTML = '00';
-        t2Hour.innerHTML = '00';
-        t2Mint.innerHTML = '00'; 
-        t2Sec.innerHTML = '00'; 
+        countdownSeconds = 60;
     }
+    updateTimer(countdownSeconds);
 }, 1000);
 
 function resultBox(cekHasil) {
@@ -293,6 +294,22 @@ search.addEventListener('submit', function(pil) {
     // }
 });
 
+if (nimInputField != null && nimSuggestionDialog != null) {
+    let nimSuggestionShown = false;
+    nimInputField.addEventListener("focus", function() {
+        if (nimSuggestionShown == false) {
+            nimSuggestionDialog.showModal();
+            nimSuggestionShown = true;
+        }
+    });
+}
+
+if (nimSuggestionClose != null && nimSuggestionDialog != null) {
+    nimSuggestionClose.addEventListener("click", function() {
+        nimSuggestionDialog.close();
+    });
+}
+
 function checkNumber(val) {
     let list = new Array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
     var status = true;
@@ -347,11 +364,14 @@ function getInvalids(masukan) {
 board.addEventListener("click", function(pil) {
     let cards = '';
     const display = document.querySelector('div#display');
-    if (pil.target.classList.contains("detail") == true) {
+    const detailTrigger = pil.target.closest("a.detail-trigger");
+    if (detailTrigger != null && hasilTest[0] != undefined) {
         cards += showCard(hasilTest[0]);
-        // display.innerHTML = cards;
-        display.setHTML(cards, { sanitizer: new Sanitizer() })
-        // display.classList.remove("hidden");
+        if (typeof display.setHTML == "function" && typeof Sanitizer != "undefined") {
+            display.setHTML(cards, { sanitizer: new Sanitizer() });
+        } else {
+            display.innerHTML = cards;
+        }
     } 
 
     pil.preventDefault();
@@ -414,7 +434,7 @@ function ingpo1(m) {
         <div class="w-full flex coba">
             <div class="line-result bg-red-600"></div>
             <div class="sub-div-detail">
-                <a href="#display">
+                <a href="#display" class="detail-trigger">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="red" class="w-5 h-5 inline animate-bounce mt-1">
                         <path fill-rule="evenodd" d="M5.23 15.79a.75.75 0 01-.02-1.06l4.25-4.5a.75.75 0 011.08 0l4.25 4.5a.75.75 0 11-1.08 1.04L10 11.832 6.29 15.77a.75.75 0 01-1.06.02zm0-6a.75.75 0 01-.02-1.06l4.25-4.5a.75.75 0 011.08 0l4.25 4.5a.75.75 0 11-1.08 1.04L10 5.832 6.29 9.77a.75.75 0 01-1.06.02z" clip-rule="evenodd"/></svg>
                     <span class="detail text-red-900">Detail</span>
@@ -444,7 +464,7 @@ function ingpo2(m) {
         <div class="w-full flex">
             <div class="line-result bg-green-600"></div>
             <div class="sub-div-detail">
-                <a href="#display">
+                <a href="#display" class="detail-trigger">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="green" class="w-5 h-5 inline animate-bounce mt-1">
                         <path fill-rule="evenodd" d="M5.23 15.79a.75.75 0 01-.02-1.06l4.25-4.5a.75.75 0 011.08 0l4.25 4.5a.75.75 0 11-1.08 1.04L10 11.832 6.29 15.77a.75.75 0 01-1.06.02zm0-6a.75.75 0 01-.02-1.06l4.25-4.5a.75.75 0 011.08 0l4.25 4.5a.75.75 0 11-1.08 1.04L10 5.832 6.29 9.77a.75.75 0 01-1.06.02z" clip-rule="evenodd"/></svg>
                     <span class="detail text-green-900">Detail</span>
