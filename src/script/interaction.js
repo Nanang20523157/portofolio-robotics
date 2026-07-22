@@ -3,9 +3,6 @@ const navbar = document.querySelector('header.header');
 const body = document.querySelector('body');
 const search = document.querySelector('form.search');
 const board = document.querySelector('div.board');
-const nimInputField = document.querySelector('input#nim');
-const nimSuggestionDialog = document.querySelector('dialog#nim-suggestion-dialog');
-const nimSuggestionClose = document.querySelector('button#nim-suggestion-close');
 let childDisplay = [];
 let tampilkan = false;
 
@@ -59,11 +56,12 @@ function updateTimer(totalSeconds) {
 
 updateTimer(countdownSeconds);
 
-setInterval(function() {
+const timerInterval = setInterval(function() {
     countdownSeconds -= 1;
-    if (countdownSeconds < 0) {
+    if (countdownSeconds <= 0) {
+        countdownSeconds = 0;
         tampilkan = true;
-        countdownSeconds = 60;
+        clearInterval(timerInterval);
     }
     updateTimer(countdownSeconds);
 }, 1000);
@@ -293,22 +291,6 @@ search.addEventListener('submit', function(pil) {
     // if (pil.target.classList.contains("btn-search") == true) {
     // }
 });
-
-if (nimInputField != null && nimSuggestionDialog != null) {
-    let nimSuggestionShown = false;
-    nimInputField.addEventListener("focus", function() {
-        if (nimSuggestionShown == false) {
-            nimSuggestionDialog.showModal();
-            nimSuggestionShown = true;
-        }
-    });
-}
-
-if (nimSuggestionClose != null && nimSuggestionDialog != null) {
-    nimSuggestionClose.addEventListener("click", function() {
-        nimSuggestionDialog.close();
-    });
-}
 
 function checkNumber(val) {
     let list = new Array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
