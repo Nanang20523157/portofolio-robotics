@@ -59,11 +59,12 @@ function updateTimer(totalSeconds) {
 
 updateTimer(countdownSeconds);
 
-setInterval(function() {
+const timerInterval = setInterval(function() {
     countdownSeconds -= 1;
-    if (countdownSeconds < 0) {
+    if (countdownSeconds <= 0) {
+        countdownSeconds = 0;
         tampilkan = true;
-        countdownSeconds = 60;
+        clearInterval(timerInterval);
     }
     updateTimer(countdownSeconds);
 }, 1000);
