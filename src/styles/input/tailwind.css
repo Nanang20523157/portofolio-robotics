@@ -59,6 +59,10 @@
     .invalid-input {
         @apply text-red-700 focus:ring-red-700 border-red-600;
     }
+
+    .notice {
+        @apply mt-[5px];
+    }
 }
 
 /* MAIN_CONTENT */

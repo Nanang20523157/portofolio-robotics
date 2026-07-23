@@ -82,7 +82,7 @@ function resultBox(cekHasil) {
         <!-- hidden ??? -->
         <div class="over-result kotak-result md:hidden bg-red-400">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="red" class="w-5 h-5">
-                <path fill-rule="evenodd" d="M16.403 12.652a3 3 0 000-5.304 3 3 0 00-3.75-3.751 3 3 0 00-5.305 0 3 3 0 00-3.751 3.75 3 3 0 000 5.305 3 3 0 003.75 3.751 3 3 0 005.305 0 3 3 0 003.751-3.75zm-2.546-4.46a.75.75 0 00-1.214-.883l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
             </svg>            
             <span class="keterangan text-red-700">GAGAL</span>
         </div>`;
@@ -120,7 +120,7 @@ function resultTabel(cekHasil) {
         <!-- hidden ??? -->
         <div class="kotak-result bg-red-400">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="red" class="w-5 h-5">
-                <path fill-rule="evenodd" d="M16.403 12.652a3 3 0 000-5.304 3 3 0 00-3.75-3.751 3 3 0 00-5.305 0 3 3 0 00-3.751 3.75 3 3 0 000 5.305 3 3 0 003.75 3.751 3 3 0 005.305 0 3 3 0 003.751-3.75zm-2.546-4.46a.75.75 0 00-1.214-.883l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
             </svg>          
             <span class="keterangan text-red-700">GAGAL</span>
         </div>`;
@@ -198,25 +198,16 @@ function showCard(masukan) {
 // });
 // INTERACTION ==============================
 body.addEventListener("click", function(pil) {
-    let overlay;
-    let tutup = true;
     const display = document.querySelector('div#display');
-    
-    if (display.childElementCount != 0) {
-        overlay = document.querySelector('div.display-iden');
-        childDisplay.push(overlay.className);
-        pendataaan(overlay);
-    }
-    childDisplay.forEach((element) => {
-        if (element == pil.target.className) {
-            tutup = false;
-        }
-    })
-    if (tutup && display.childElementCount != 0) {
+    if (!display || display.childElementCount === 0) return;
+
+    const closeBtn = pil.target.closest('.close-btn');
+    const blurLayer = pil.target.closest('.blur-layer');
+    const insideModal = pil.target.closest('.display-iden');
+
+    if (closeBtn || blurLayer || !insideModal) {
         display.innerHTML = "";
-        // display.classList.add("hidden");
     }
-    childDisplay = [''];
 });
 
 window.addEventListener('scroll', function() {
@@ -263,7 +254,7 @@ search.addEventListener('submit', function(pil) {
                         notice.innerHTML = getInvalids("notfound");
                     } else {
                         input.classList.remove('invalid-input');
-                        notice.innerHTML = "";
+                        notice.innerHTML = getInvalids("default");
                         let card = getBoard(hasilTest[0]);
                         board.innerHTML = card;
                         let info = document.querySelector('.div-info');
@@ -326,19 +317,22 @@ function getInvalids(masukan) {
     let keluaran ="";
     if (masukan == "kosong") {
         keluaran = `
-        <span class="text-xs ml-1 font-medium text-red-700 before:content-['*']">masukan tidak boleh kosong</span>`;
+        <span class="block text-xs font-medium text-red-700 before:content-['*']">masukan tidak boleh kosong</span>`;
     } else if (masukan == "notfound") {
         keluaran = `
-        <span class="text-xs ml-1 font-medium text-red-700 before:content-['*']">nim mahasiswa tidak terdaftar</span>`;
+        <span class="block text-xs font-medium text-red-700 before:content-['*']">nim mahasiswa tidak terdaftar</span>`;
     } else if (masukan == "notTime") {
         keluaran = `
-        <span class="text-xs ml-1 font-medium text-red-700 before:content-['*']">belum memasuki waktu pengumuman</span>`;
+        <span class="block text-xs font-medium text-red-700 before:content-['*']">belum memasuki waktu pengumuman</span>`;
     } else if (masukan == "inval") {
         keluaran = `
-        <span class="text-xs ml-1 font-medium text-red-700 before:content-['*']">inputan user tidak valid!!!</span>`;
+        <span class="block text-xs font-medium text-red-700 before:content-['*']">inputan user tidak valid!!!</span>`;
+    } else if (masukan == "default" || masukan == "" || !masukan) {
+        keluaran = `
+        <span class="block text-xs font-medium text-black">Contoh NIM: 1212070056</span>`;
     } else {
         keluaran = `
-        <span class="text-xs ml-1 font-medium text-red-700 before:content-['*']">something is wrong</span>`;
+        <span class="block text-xs font-medium text-red-700 before:content-['*']">something is wrong</span>`;
     }
     return keluaran;
 }
@@ -349,8 +343,8 @@ board.addEventListener("click", function(pil) {
     const detailTrigger = pil.target.closest("a.detail-trigger");
     if (detailTrigger != null && hasilTest[0] != undefined) {
         cards += showCard(hasilTest[0]);
-        if (typeof display.setHTML == "function" && typeof Sanitizer != "undefined") {
-            display.setHTML(cards, { sanitizer: new Sanitizer() });
+        if (typeof DOMPurify !== "undefined" && typeof DOMPurify.sanitize === "function") {
+            display.innerHTML = DOMPurify.sanitize(cards);
         } else {
             display.innerHTML = cards;
         }
