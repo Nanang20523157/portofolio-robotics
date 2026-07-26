@@ -4,7 +4,7 @@ const body = document.querySelector('body');
 const search = document.querySelector('form.search');
 const board = document.querySelector('div.board');
 let childDisplay = [];
-let tampilkan = false;
+var tampilkan = false;
 
 function pendataaan(parent) {
     let jumlahAnak = parent.childElementCount;
@@ -31,7 +31,7 @@ const t2Hour = document.querySelector("div.timer2 div.div-clock span.hour");
 const t2Mint = document.querySelector("div.timer2 div.div-clock span.mint");
 const t2Sec = document.querySelector("div.timer2 div.div-clock span.sec");
 
-let countdownSeconds = 60;
+var countdownSeconds = 60;
 
 function updateTimer(totalSeconds) {
     let days = Math.floor(totalSeconds / (60 * 60 * 24));
@@ -284,25 +284,13 @@ search.addEventListener('submit', function(pil) {
 });
 
 function checkNumber(val) {
-    let list = new Array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
-    var status = true;
-
-    for (i=0; i<=val.length-1; i++)
-    {
-        // jika karakter ke-i termasuk dalam array, maka nilainya TRUE
-        // sedang jika tidak, nilai FALSE
-        if (val[i] in list) cek = true;
-        else cek = false;
-   
-        // kenakan operasi AND
-        status = status && cek;
-        if (status == false) {   
+    if (!val || val.length === 0) return false;
+    for (let i = 0; i < val.length; i++) {
+        if (val[i] < '0' || val[i] > '9') {
             return false;
         }
-        else {
-            return true; 
-        } 
     }
+    return true;
 }
 
 function checkArray(masukan) {
